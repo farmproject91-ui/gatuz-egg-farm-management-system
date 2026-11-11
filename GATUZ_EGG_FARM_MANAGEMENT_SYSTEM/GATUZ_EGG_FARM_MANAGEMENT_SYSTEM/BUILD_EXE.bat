@@ -1,8 +1,42 @@
 @echo off
 setlocal
 cd /d "%~dp0"
-py -m pip install -r requirements.txt pyinstaller
-py -m PyInstaller --noconfirm --clean --windowed --onedir --name GATUZ_EGG_FARM app.py
+where py >nul 2>nul
+if not errorlevel 1 (
+  set "PY=py -3"
+) else (
+  where python >nul 2>nul
+  if errorlevel 1 (
+    echo Python 3.12 or newer is required. Install it from https://www.python.org/
+    pause
+    exit /b 1
+  )
+  set "PY=python"
+)
+%PY% -c "import sys; raise SystemExit(0 if sys.version_info >= (3, 12) else 1)"
+if errorlevel 1 (
+  echo Python 3.12 or newer is required. Check your Python installation.
+  pause
+  exit /b 1
+)
+%PY% -m pip install -r requirements.txt
+if errorlevel 1 (
+  echo Dependency installation failed.
+  pause
+  exit /b 1
+)
+%PY% -m pip install --upgrade PyInstaller
+if errorlevel 1 (
+  echo PyInstaller installation failed.
+  pause
+  exit /b 1
+)
+%PY% -m PyInstaller --noconfirm --clean --windowed --onedir --name GATUZ_EGG_FARM app.py
+if errorlevel 1 (
+  echo EXE build failed. Review the error messages above.
+  pause
+  exit /b 1
+)
 echo.
 echo EXE build output: dist\GATUZ_EGG_FARM\
 pause

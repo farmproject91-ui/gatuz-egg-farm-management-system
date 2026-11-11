@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments and local configuration
+.venv/
+venv/
+env/
+.env
+.env.*
+!.env.example
+
+# SQLite data and backups (ignored for future additions; tracked files stay tracked)
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+**/data/
+**/backups/
+
+# Build and packaging output
+build/
+dist/
+*.spec
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
