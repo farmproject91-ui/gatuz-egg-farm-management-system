@@ -31,7 +31,7 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
-%PY% -m PyInstaller --noconfirm --clean --windowed --onedir --name GATUZ_EGG_FARM app.py
+%PY% -m PyInstaller --noconfirm --clean --windowed --onedir --name GATUZ_EGG_FARM dashboard_app.py
 if errorlevel 1 (
   echo EXE build failed. Review the error messages above.
   pause
