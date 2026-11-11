@@ -1,39 +1,42 @@
 # GATUZ Egg Farm Management System
 
-Offline-first Windows desktop application built with Python, Tkinter, and SQLite. The existing application is preserved in `GATUZ_EGG_FARM_MANAGEMENT_SYSTEM/GATUZ_EGG_FARM_MANAGEMENT_SYSTEM/`; the root-level batch files are convenience launchers for that project directory.
+A desktop app for managing farm operations using Python, Tkinter, and SQLite. Nagsisimula pa lang? Tingnan ang [Mabilisang Gabay sa Filipino](QUICK_START_TL.md).
 
-## Windows setup
+## Start here (Windows)
 
-1. Install Python 3.12 or newer from [python.org](https://www.python.org/), including the option to add Python to PATH.
-2. From the repository root, double-click `START_GATUZ.bat`. It installs the application's dependencies and launches the existing app.
-3. The application stores its working database at `GATUZ_EGG_FARM_MANAGEMENT_SYSTEM/GATUZ_EGG_FARM_MANAGEMENT_SYSTEM/data/gatuz.db`.
-4. Change the initial admin password immediately after signing in. The application currently seeds a default `admin` account; do not use that account/password for production data without changing it.
+1. Install Python 3.12 or newer from [python.org](https://www.python.org/).
+2. Download or clone this repository and extract it if you downloaded a ZIP.
+3. Double-click **`START_GATUZ.bat`** from the repository root. Internet access is needed on first launch to install dependencies.
+4. If the default account is still active, sign in with `admin` / `admin123` and change the password before entering real data. Admins can manage/reset accounts from **Users**; a self-service password change is not currently exposed in the navigation.
 
-To run manually, open Command Prompt in the nested project directory and run `python app.py` (install dependencies first using `python -m pip install -r requirements.txt`). Tkinter must be available in the Python installation.
+For a step-by-step guide to navigation and safe data handling, read [QUICK_START_TL.md](QUICK_START_TL.md).
 
-## Existing functionality
+## What the app currently supports
 
-This setup preserves the application's existing modules and SQLite schema. Current functionality includes multiple farms, flock/batch records, egg collection by grade, inventory and stock movements, customers, sales and payments, expenses, dashboard summaries, Excel/PDF exports, user roles, and database backup/restore. This setup does not add separate mortality/culling, morning/afternoon collection, hen-day production, or vaccination modules; check the existing application before planning future integration so features are not duplicated.
+- Multiple farms and farm filtering
+- Flock/batch records
+- Egg production records by grade
+- Inventory and stock movements
+- Customers, sales, payments, and balances
+- Expenses, dashboard summaries, and Excel/PDF report export
+- Admin/staff user management
+- Database backups and restore
 
-## Back up and restore your data
+This setup preserves the existing source and database schema. Do not assume that separate mortality/culling, morning/afternoon egg collection, hen-day production, or vaccination modules already exist; verify the current UI and schema before planning them.
 
-- Use **Backup & restore → Create manual backup** in the application for a consistent SQLite backup. The app also makes a daily snapshot at launch.
-- Keep backups in a secure location separate from this repository and test that they can be opened/restored.
-- To copy the database manually, close the application first, then copy `data/gatuz.db` and the desired files from `backups/` to a secure location. Do not copy a live SQLite database while it is being written.
-- Restore through **Backup & restore → Restore from backup file**. The app asks before replacing current data and creates a safety copy first. Verify the selected backup before confirming.
+## Run manually
 
-## Build a Windows executable
+Open a command prompt in `GATUZ_EGG_FARM_MANAGEMENT_SYSTEM/GATUZ_EGG_FARM_MANAGEMENT_SYSTEM/`, then run:
 
-Double-click `BUILD_EXE.bat` from the repository root. The build uses PyInstaller and places its output under the nested project's `dist/GATUZ_EGG_FARM/` directory. Distribute the complete output folder, not only the executable. Verify data and backup locations on a separate test copy before using a packaged build with production records.
+```bash
+python -m pip install -r requirements.txt
+python app.py
+```
 
-## Security and repository data warning
+Tkinter must be available in the Python installation. `BUILD_EXE.bat` builds a Windows onedir package; distribute the complete output folder and test it with a non-production database first.
 
-`.gitignore` excludes local SQLite databases, backups, Python caches, build output, and credentials from future additions. **It does not remove files already tracked by Git.** At setup time, the repository already contained `data/gatuz.db` and a database backup under `backups/`; these tracked files have not been deleted or altered, to avoid losing existing records. Treat the repository as containing database data, restrict access as appropriate, and have the repository owner safely remove/untrack these files in a separate reviewed change if they must not be published. Never commit real passwords, API keys, or other private credentials. The app's seeded default login is not a secure production credential.
+## Protect your data
 
-## Project layout
+Use **Backup & restore → Create manual backup** and keep a separate copy in a secure location. Restore replaces the current database, so confirm the file and keep a safety copy first.
 
-- `GATUZ_EGG_FARM_MANAGEMENT_SYSTEM/GATUZ_EGG_FARM_MANAGEMENT_SYSTEM/app.py` — existing desktop application
-- `GATUZ_EGG_FARM_MANAGEMENT_SYSTEM/GATUZ_EGG_FARM_MANAGEMENT_SYSTEM/database.py` — existing SQLite schema and database helpers
-- `GATUZ_EGG_FARM_MANAGEMENT_SYSTEM/GATUZ_EGG_FARM_MANAGEMENT_SYSTEM/README.md` — application-specific usage notes
-- Root `START_GATUZ.bat` and `BUILD_EXE.bat` — launch/build wrappers
-- Root `requirements.txt` — references the application's dependency list
+**Security warning:** this repository already contains tracked SQLite database/backup files. `.gitignore` only affects future untracked files; it does not remove existing tracked data or erase Git history. Review repository visibility and database contents before storing real business or customer data. Do not commit credentials.
