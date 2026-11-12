@@ -62,7 +62,7 @@ class FriendlyGatuzApp(existing_app.GatuzApp):
                 else:
                     ax.plot(labels, values, marker="o", linewidth=2, color=color)
             else:
-                ax.text(0.5, 0.5, "Wala pang datos. Magdagdag ng records para makita ang trend.",
+                ax.text(0.5, 0.5, "No data yet. Add records to see the trend.",
                         ha="center", va="center", color=MUTED, wrap=True, transform=ax.transAxes, fontsize=8)
                 ax.set_xticks([])
                 ax.set_yticks([])
@@ -79,13 +79,13 @@ class FriendlyGatuzApp(existing_app.GatuzApp):
             chart.get_tk_widget().pack(fill="both", expand=True, pady=(4, 0))
             return chart
         except Exception:
-            tk.Label(parent, text="Hindi maipakita ang graph. I-install muli ang dependencies gamit ang START_GATUZ.bat.",
+            tk.Label(parent, text="Unable to display the chart. Reinstall dependencies using START_GATUZ.bat.",
                      bg=PANEL, fg=MUTED, wraplength=360, justify="left").pack(anchor="w", pady=12)
             return None
 
     def dashboard(self):
         self.current_page = self.dashboard
-        self.page("Farm Dashboard", "Pangkalahatang tanaw ng farm. Piliin ang farm sa itaas o sa mga card sa ibaba.")
+        self.page("Farm Dashboard", "Farm overview. Select a farm above or from the cards below.")
         body = self.body()
         farm_id = self.selected_farm()
         active_farms = db.farm_rows()
@@ -95,7 +95,7 @@ class FriendlyGatuzApp(existing_app.GatuzApp):
         farm_section.pack(fill="x", pady=(0, 7))
         tk.Label(farm_section, text="FARM MANAGEMENT", bg=BG, fg=GOLD,
                  font=("Segoe UI", 10, "bold")).pack(anchor="w", padx=4)
-        tk.Label(farm_section, text="Pumili ng farm o pindutin ang Gumawa ng Report para sa farm na iyon.",
+        tk.Label(farm_section, text="Select a farm or click Create Report for that farm.",
                  bg=BG, fg=MUTED, font=("Segoe UI", 8)).pack(anchor="w", padx=4, pady=(1, 3))
         farm_cards = tk.Frame(farm_section, bg=BG)
         farm_cards.pack(fill="x")
@@ -114,10 +114,10 @@ class FriendlyGatuzApp(existing_app.GatuzApp):
                       bg=tile.cget("bg"), fg=TEXT, activebackground=GREEN, activeforeground="white",
                       anchor="w", justify="left", wraplength=150, relief="flat",
                       font=("Segoe UI", 9, "bold"), cursor="hand2").pack(fill="x")
-            location = farm["location"] or "Lokasyon hindi pa nailalagay"
+            location = farm["location"] or "Location not provided"
             tk.Label(tile, text=location, bg=tile.cget("bg"), fg=MUTED,
                      font=("Segoe UI", 8)).pack(anchor="w", pady=(3, 6))
-            tk.Button(tile, text="▤  Gumawa ng Report",
+            tk.Button(tile, text="▤  Create Report",
                       command=lambda name=farm["name"]: self._open_farm_report(name),
                       bg=GREEN, fg="white", activebackground=GOLD, activeforeground="#101010",
                       relief="flat", font=("Segoe UI", 8, "bold"), cursor="hand2",
@@ -130,11 +130,11 @@ class FriendlyGatuzApp(existing_app.GatuzApp):
         add_tile = tk.Frame(add_shell, bg=BG2, padx=8, pady=8, highlightthickness=1,
                             highlightbackground="#8a793c", bd=0, relief="raised")
         add_tile.pack(fill="both", expand=True, padx=2, pady=2)
-        tk.Button(add_tile, text="＋  Magdagdag ng Farm", command=self.farms_page,
+        tk.Button(add_tile, text="＋  Add Farm", command=self.farms_page,
                   bg=BG2, fg=GOLD, activebackground=GREEN, activeforeground="white",
                   relief="flat", font=("Segoe UI", 9, "bold"), cursor="hand2").pack(expand=True, fill="both")
         if len(active_farms) > len(shown_farms):
-            tk.Label(farm_section, text=f"Ipinapakita ang unang {len(shown_farms)} sa {len(active_farms)} farms. Gamitin ang Farm view filter para sa iba.",
+            tk.Label(farm_section, text=f"Showing the first {len(shown_farms)} of {len(active_farms)} farms. Use the Farm view filter to see others.",
                      bg=BG, fg=MUTED, font=("Segoe UI", 8)).pack(anchor="w", padx=4)
 
         stats = db.farm_stats(farm_id)
@@ -148,10 +148,10 @@ class FriendlyGatuzApp(existing_app.GatuzApp):
         sales_total = float(total_sales_row["n"] or 0)
         kpi_row = tk.Frame(body, bg=BG)
         kpi_row.pack(fill="x", pady=(2, 5))
-        self._dash_card(kpi_row, "Aktibong Manok", f"{birds:,}", "Batay sa aktibong flock records")
-        self._dash_card(kpi_row, "Nakolektang Itlog", f"{eggs:,}", "Kabuuang naitalang production")
-        self._dash_card(kpi_row, "Kabuuang Benta", f"₱{sales_total:,.2f}", "Batay sa sales records")
-        self._dash_card(kpi_row, "Hindi Pa Bayad", f"₱{float(stats['balance']):,.2f}", "Natitirang balance", GOLD)
+        self._dash_card(kpi_row, "Active Chickens", f"{birds:,}", "Based on active flock records")
+        self._dash_card(kpi_row, "Eggs Collected", f"{eggs:,}", "Total recorded production")
+        self._dash_card(kpi_row, "Total Sales", f"₱{sales_total:,.2f}", "Based on sales records")
+        self._dash_card(kpi_row, "Outstanding Balance", f"₱{float(stats['balance']):,.2f}", "Remaining balance", GOLD)
 
         prod_where = " WHERE day >= date('now','-30 days')" + (" AND farm_id=?" if farm_id is not None else "")
         prod_args = (farm_id,) if farm_id is not None else ()
@@ -173,18 +173,18 @@ class FriendlyGatuzApp(existing_app.GatuzApp):
         mid = tk.Frame(body, bg=BG)
         mid.pack(fill="both", expand=True, pady=4)
         prod_panel = self._dash_panel(mid, "Poultry Extension — Egg Production",
-                                      "Aktuwal na egg count sa pinakahuling 30 araw; hindi ito age-based percentage.")
+                                      "Actual egg counts from the last 30 days; this is not an age-based percentage.")
         prod_panel.pack(side="left", fill="both", expand=True, padx=3, pady=3)
         self._dash_chart(prod_panel, [r["day"][5:] for r in daily],
-                         [int(r["eggs"] or 0) for r in daily], "Itlog", "line", GOLD)
+                         [int(r["eggs"] or 0) for r in daily], "Eggs", "line", GOLD)
 
-        summary_panel = self._dash_panel(mid, "Egg Production Summary", "Batay sa kasalukuyang talaan")
+        summary_panel = self._dash_panel(mid, "Egg Production Summary", "Based on current records")
         summary_panel.pack(side="left", fill="both", expand=True, padx=3, pady=3)
         summary_lines = (
-            ("Produksyon ngayong araw", f"{int(today_row['eggs'] or 0):,} itlog"),
-            ("Average ngayong buwan", f"{(int(month_row['eggs'] or 0) / max(int(month_row['days'] or 0), 1)):,.0f} itlog/araw"),
-            ("Average egg weight", "Hindi pa itinatala"),
-            ("Age-based hen-day rate", "Kailangan ng flock history"),
+            ("Today's Production", f"{int(today_row['eggs'] or 0):,} eggs"),
+            ("Monthly Average", f"{(int(month_row['eggs'] or 0) / max(int(month_row['days'] or 0), 1)):,.0f} eggs/day"),
+            ("Average Egg Weight", "Not recorded yet"),
+            ("Age-Based Hen-Day Rate", "Flock history required"),
         )
         for label, value in summary_lines:
             line = tk.Frame(summary_panel, bg=PANEL)
@@ -194,7 +194,7 @@ class FriendlyGatuzApp(existing_app.GatuzApp):
 
         bottom = tk.Frame(body, bg=BG)
         bottom.pack(fill="both", expand=True, pady=4)
-        grade_panel = self._dash_panel(bottom, "Egg Size Classification", "Kabuuang bilang ayon sa egg grade na naitala")
+        grade_panel = self._dash_panel(bottom, "Egg Size Classification", "Total counts by recorded egg grade")
         grade_panel.pack(side="left", fill="both", expand=True, padx=3, pady=3)
         grade_row = tk.Frame(grade_panel, bg=PANEL)
         grade_row.pack(fill="x", expand=True, pady=(12, 3))
@@ -205,7 +205,7 @@ class FriendlyGatuzApp(existing_app.GatuzApp):
             tk.Label(cell, text=f"{value:,}", bg=PANEL_ALT, fg=GOLD, font=("Segoe UI", 10, "bold")).pack()
             tk.Label(cell, text=label, bg=PANEL_ALT, fg=MUTED, font=("Segoe UI", 7)).pack(pady=(3, 0))
 
-        grades_panel = self._dash_panel(bottom, "Production Mix", "Bahagi ng bawat grade sa lahat ng nakolektang itlog")
+        grades_panel = self._dash_panel(bottom, "Production Mix", "Share of each grade among all collected eggs")
         grades_panel.pack(side="left", fill="both", expand=True, padx=3, pady=3)
         total_grade = sum(int(grades[field] or 0) for _, field in GRADE_FIELDS)
         for label, field in GRADE_FIELDS:
@@ -222,7 +222,7 @@ class FriendlyGatuzApp(existing_app.GatuzApp):
 
         lower = tk.Frame(body, bg=BG)
         lower.pack(fill="both", expand=True, pady=4)
-        sales_panel = self._dash_panel(lower, "Sales & Receipts", "Benta kada buwan — huling 6 na buwang may records")
+        sales_panel = self._dash_panel(lower, "Sales & Receipts", "Monthly sales — last 6 months with records")
         sales_panel.pack(side="left", fill="both", expand=True, padx=3, pady=3)
         with db.connect() as conn:
             sales_by_month = conn.execute(
@@ -234,7 +234,7 @@ class FriendlyGatuzApp(existing_app.GatuzApp):
         self._dash_chart(sales_panel, [r["month"] for r in sales_by_month],
                          [float(r["amount"] or 0) for r in sales_by_month], "PHP", "bar", GOLD)
 
-        activity_panel = self._dash_panel(lower, "Recent Activities", "Pinakahuling naitalang galaw")
+        activity_panel = self._dash_panel(lower, "Recent Activities", "Most recently recorded activity")
         activity_panel.pack(side="left", fill="both", expand=True, padx=3, pady=3)
         activities = db.recent_activity(farm_id, limit=5)
         if activities:
@@ -242,7 +242,7 @@ class FriendlyGatuzApp(existing_app.GatuzApp):
                 tk.Label(activity_panel, text=f"•  {day}  {description}", bg=PANEL, fg=TEXT, anchor="w",
                          justify="left", wraplength=360, font=("Segoe UI", 8)).pack(fill="x", pady=5)
         else:
-            tk.Label(activity_panel, text="Wala pang aktibidad. Magsimula sa pagdagdag ng farm, flock, o egg collection.",
+            tk.Label(activity_panel, text="No activity yet. Start by adding a farm, flock, or egg collection.",
                      bg=PANEL, fg=MUTED, wraplength=350, justify="left", font=("Segoe UI", 8)).pack(anchor="w", pady=12)
 
     def _choose_dashboard_farm(self, name):
