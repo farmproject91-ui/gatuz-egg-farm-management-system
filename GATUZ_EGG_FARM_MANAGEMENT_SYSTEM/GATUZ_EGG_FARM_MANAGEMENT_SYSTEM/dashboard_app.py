@@ -115,7 +115,7 @@ class FriendlyGatuzApp(existing_app.GatuzApp):
         farm_section.pack(fill="x", pady=(0, 7))
         tk.Label(farm_section, text="FARM MANAGEMENT", bg=BG, fg=GOLD,
                  font=("Segoe UI", 10, "bold")).pack(anchor="w", padx=4)
-        tk.Label(farm_section, text="Pumili ng farm para makita ang kaugnay na records.", bg=BG, fg=MUTED,
+        tk.Label(farm_section, text="Pumili ng farm para makita ang kaugnay na records o gumawa ng report.", bg=BG, fg=MUTED,
                  font=("Segoe UI", 8)).pack(anchor="w", padx=4, pady=(1, 3))
         farm_cards = tk.Frame(farm_section, bg=BG)
         farm_cards.pack(fill="x")
@@ -155,7 +155,21 @@ class FriendlyGatuzApp(existing_app.GatuzApp):
             ).pack(fill="x")
             location = farm["location"] or "Lokasyon hindi pa nailalagay"
             tk.Label(tile, text=location, bg=tile.cget("bg"), fg=MUTED,
-                     font=("Segoe UI", 8)).pack(anchor="w", pady=(3, 0))
+                     font=("Segoe UI", 8)).pack(anchor="w", pady=(3, 5))
+            tk.Button(
+                tile,
+                text="▤  Gumawa ng Report",
+                command=lambda name=farm["name"]: self._open_farm_report(name),
+                bg=GREEN,
+                fg="white",
+                activebackground=GOLD,
+                activeforeground="#101010",
+                relief="flat",
+                font=("Segoe UI", 8, "bold"),
+                cursor="hand2",
+                padx=8,
+                pady=5,
+            ).pack(anchor="w", fill="x", pady=(2, 0))
 
         add_col = len(shown_farms)
         farm_cards.grid_columnconfigure(add_col, weight=1)
@@ -289,6 +303,11 @@ class FriendlyGatuzApp(existing_app.GatuzApp):
     def _choose_dashboard_farm(self, name):
         self.farm_filter.set(name)
         self.dashboard()
+
+    def _open_farm_report(self, name):
+        """Open the existing Excel/PDF report page scoped to the chosen farm."""
+        self.farm_filter.set(name)
+        self.reports_page()
 
 
 if __name__ == "__main__":
