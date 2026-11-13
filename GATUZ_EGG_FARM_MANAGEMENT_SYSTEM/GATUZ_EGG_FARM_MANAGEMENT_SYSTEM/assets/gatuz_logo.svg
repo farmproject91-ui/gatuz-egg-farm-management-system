@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="1200" height="1200">
+  <defs>
+    <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#7dd2ff"/>
+      <stop offset="100%" stop-color="#dff7ff"/>
+    </linearGradient>
+    <linearGradient id="grass" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#65b443"/>
+      <stop offset="100%" stop-color="#2f7d36"/>
+    </linearGradient>
+    <linearGradient id="wood" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#d79a44"/>
+      <stop offset="100%" stop-color="#9a5b1c"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000000" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="1200" fill="#f2f2f2"/>
+  <circle cx="600" cy="600" r="515" fill="url(#sky)" stroke="#4f2c0a" stroke-width="24"/>
+
+  <g opacity="0.75">
+    <circle cx="260" cy="260" r="96" fill="#f6d64b"/>
+    <g stroke="#f6d64b" stroke-width="10" stroke-linecap="round">
+      <line x1="260" y1="120" x2="260" y2="20"/>
+      <line x1="260" y1="400" x2="260" y2="500"/>
+      <line x1="120" y1="260" x2="20" y2="260"/>
+      <line x1="400" y1="260" x2="500" y2="260"/>
+      <line x1="160" y1="160" x2="90" y2="90"/>
+      <line x1="360" y1="360" x2="430" y2="430"/>
+      <line x1="160" y1="360" x2="90" y2="430"/>
+      <line x1="360" y1="160" x2="430" y2="90"/>
+    </g>
+  </g>
+
+  <g opacity="0.9">
+    <ellipse cx="370" cy="300" rx="140" ry="80" fill="#4e9f47"/>
+    <ellipse cx="870" cy="330" rx="180" ry="96" fill="#5caf4c"/>
+    <ellipse cx="180" cy="750" rx="180" ry="80" fill="#3c8d3f"/>
+    <ellipse cx="1010" cy="740" rx="180" ry="70" fill="#3a8d41"/>
+  </g>
+
+  <g fill="#d9d4ca">
+    <path d="M280 620 L880 620 L920 760 L240 760 Z" opacity="0.75"/>
+    <path d="M255 760 L950 760 L870 900 L330 900 Z" opacity="0.8"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <ellipse cx="600" cy="750" rx="500" ry="260" fill="#e7b86d" opacity="0.75"/>
+    <path d="M360 730 C430 660, 770 660, 840 730 L840 860 C770 910, 430 910, 360 860 Z" fill="#d29b55"/>
+  </g>
+
+  <g>
+    <path d="M510 665 C540 575, 620 560, 680 570 C760 580, 820 640, 830 715 C820 778, 770 820, 690 830 L505 828 C430 820, 390 770, 390 715 C390 692, 418 690, 510 665 Z" fill="#bd5d2b"/>
+    <path d="M560 600 C610 558, 665 560, 705 600 C718 612, 726 633, 727 652 C698 688, 639 710, 560 700 C515 690, 486 658, 500 628 C510 610, 528 600, 560 600 Z" fill="#b2542b"/>
+    <path d="M505 530 C470 470, 520 420, 575 410 C610 404, 657 408, 688 434 C718 462, 720 518, 687 550 C660 578, 618 590, 576 584 C540 579, 522 563, 505 530 Z" fill="#b35424"/>
+    <path d="M520 510 C570 475, 645 480, 688 535" fill="none" stroke="#7b2f12" stroke-width="8" stroke-linecap="round"/>
+    <path d="M475 568 C450 548, 430 544, 410 552 C392 560, 378 582, 372 602 C390 606, 408 610, 422 621 C450 606, 470 586, 475 568 Z" fill="#d96c30"/>
+
+    <path d="M698 495 C745 475, 770 490, 785 505 C798 520, 802 550, 784 566 C757 598, 712 585, 687 553 C676 538, 676 510, 698 495 Z" fill="#e84b2d"/>
+    <path d="M808 521 C828 514, 845 525, 850 544 C854 562, 848 580, 832 590 C813 601, 790 595, 776 580 C789 545, 793 530, 808 521 Z" fill="#f54a2d"/>
+    <path d="M665 470 L718 440 L728 495 Z" fill="#f27313"/>
+    <path d="M677 467 L722 424 L742 474 Z" fill="#ffdf49"/>
+    <path d="M734 465 L770 438 L780 485 Z" fill="#f27313"/>
+
+    <circle cx="623" cy="496" r="12" fill="#1c1c1c"/>
+    <circle cx="622" cy="492" r="5" fill="#fff"/>
+    <path d="M635 520 C640 533, 648 538, 660 540" fill="none" stroke="#7a2e1b" stroke-width="7" stroke-linecap="round"/>
+    <path d="M690 600 C712 620, 715 642, 702 660" fill="none" stroke="#7a2e1b" stroke-width="7" stroke-linecap="round"/>
+
+    <g fill="#f5d7ae" stroke="#d5b780" stroke-width="5">
+      <ellipse cx="540" cy="760" rx="99" ry="78"/>
+      <ellipse cx="640" cy="760" rx="99" ry="78"/>
+      <ellipse cx="740" cy="760" rx="99" ry="78"/>
+      <ellipse cx="600" cy="810" rx="120" ry="76"/>
+      <ellipse cx="710" cy="812" rx="112" ry="74"/>
+      <ellipse cx="490" cy="812" rx="112" ry="74"/>
+    </g>
+
+    <g fill="#f0d39a">
+      <path d="M360 700 C400 690, 444 712, 470 750 C435 780, 386 782, 352 760 C340 742, 343 710, 360 700 Z"/>
+      <path d="M788 700 C827 693, 860 715, 878 748 C860 780, 818 794, 780 780 C760 766, 758 712, 788 700 Z"/>
+    </g>
+
+    <g opacity="0.9">
+      <path d="M563 715 C560 696, 578 680, 594 680 C610 680, 626 694, 626 710 C626 725, 611 737, 594 738 C578 739, 566 731, 563 715 Z" fill="#efe7db" stroke="#cdbca0" stroke-width="3"/>
+      <path d="M420 621 L455 641 L487 621" fill="none" stroke="#5b3a0d" stroke-width="3"/>
+      <path d="M710 621 L760 640 L800 622" fill="none" stroke="#5b3a0d" stroke-width="3"/>
+    </g>
+  </g>
+
+  <g fill="#7d4812" opacity="0.5">
+    <path d="M340 905 C430 870, 520 857, 620 860 C720 864, 810 875, 860 905 L860 930 C807 950, 715 960, 620 962 C511 964, 425 955, 340 930 Z"/>
+  </g>
+
+  <g>
+    <path d="M280 900 L920 900 C930 900 935 910 935 926 L935 950 C935 960 928 968 918 968 L282 968 C272 968 265 960 265 950 L265 926 C265 910 270 900 280 900 Z" fill="url(#wood)" stroke="#4d2d0d" stroke-width="20"/>
+    <text x="600" y="1020" text-anchor="middle" font-size="160" font-weight="900" font-family="Arial Black, Arial, sans-serif" fill="#3d1605" style="letter-spacing: 3px;">GATUZ</text>
+    <text x="600" y="1110" text-anchor="middle" font-size="130" font-weight="900" font-family="Arial Black, Arial, sans-serif" fill="#0d5e3d" style="letter-spacing: 10px;">EGG FARM</text>
+  </g>
+
+  <g opacity="0.7">
+    <path d="M640 908 C660 888, 685 889, 708 908 C720 920, 738 928, 760 930 C724 966, 685 982, 640 982 C598 982, 558 968, 520 930 C542 927, 561 920, 573 908 C593 888, 617 888, 640 908 Z" fill="#ddba76"/>
+  </g>
+
+  <g fill="#f5e0b7">
+    <ellipse cx="290" cy="895" rx="76" ry="50"/>
+    <ellipse cx="973" cy="905" rx="74" ry="48"/>
+  </g>
+</svg>
